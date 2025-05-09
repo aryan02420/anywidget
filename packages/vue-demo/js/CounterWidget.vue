@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useModelState } from "@anywidget/vue";
-import Text from "./Text.vue";
+import HelloWorld from "./HelloWorld.vue";
 
 const value = useModelState<number>("value");
 </script>
 
 <template>
-<Text></Text>
+<HelloWorld></HelloWorld>
 <button :onClick="() => value++">count is {{value}}</button>
 </template>
 

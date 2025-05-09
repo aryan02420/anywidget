@@ -6,7 +6,7 @@
 </template>
 
 <style scoped>
-span {
+p {
 	color: red;
 }
 </style>
