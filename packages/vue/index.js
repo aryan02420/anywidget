@@ -129,11 +129,15 @@ const WidgetWrapper = defineComponent(
 
 /**
  * @param {import("vue").Component} Widget
+ * @param {(app: import("vue").App) => void} [enhanceApp]
  * @returns {import("@anywidget/types").Render}
  */
-export function createRender(Widget) {
+export function createRender(Widget, enhanceApp) {
 	return ({ el, model, experimental }) => {
 		const app = createApp(h(WidgetWrapper, { model, experimental }, h(Widget)));
+		if (enhanceApp) {
+			enhanceApp(app);
+		}
 		app.mount(el);
 
 		return () => app.unmount();

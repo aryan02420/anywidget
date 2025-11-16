@@ -36,6 +36,19 @@ const value = useModelState("value");
 </style>
 ```
 
+### Using Vue Plugins
+
+```javascript
+import { createRender } from "@anywidget/vue";
+import { createPinia } from "pinia";
+import MyWidget from "./MyWidget.vue";
+
+const pinia = createPinia()
+const render = createRender(MyWidget, (app) => {
+	app.use(pinia);
+});
+```
+
 ## Bundlers
 
 You'll need to compile the above source files into a single ESM entrypoint for
