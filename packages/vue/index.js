@@ -1,12 +1,10 @@
 import {
 	createApp,
 	customRef,
-	defineComponent,
 	h,
 	inject,
 	onMounted,
 	onUnmounted,
-	provide,
 	toValue,
 	unref,
 } from "vue";
@@ -114,30 +112,17 @@ export function useModelState(key) {
 }
 
 /**
- * @type {import("vue").DefineSetupFnComponent<RenderContext<any>>}
- */
-const WidgetWrapper = defineComponent(
-	({ model, experimental }, ctx) => {
-		provide(RENDER_CONTEXT_KEY, { model, experimental });
-		return () => ctx.slots?.default?.();
-	},
-	{
-		props: ["model", "experimental"],
-		name: "WidgetWrapper",
-	},
-);
-
-/**
  * @param {import("vue").Component} Widget
  * @param {(app: import("vue").App) => void} [enhanceApp]
  * @returns {import("@anywidget/types").Render}
  */
 export function createRender(Widget, enhanceApp) {
 	return ({ el, model, experimental }) => {
-		const app = createApp(h(WidgetWrapper, { model, experimental }, h(Widget)));
+		const app = createApp(h(Widget));
 		if (enhanceApp) {
 			enhanceApp(app);
 		}
+		app.provide(RENDER_CONTEXT_KEY, { model, experimental })
 		app.mount(el);
 
 		return () => app.unmount();
